@@ -1,0 +1,25 @@
+<tr class="text-center">
+  <td>
+    <a href="<%= cart_item_path(item) %>" data-method="delete" data-confirm="Are you sure?" class="close" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </a>
+  </td>
+  <td class="image-prod">
+    <img class="img-fluid img-thumbnail img" src="<%= item.product.image %>">
+  </td>
+  <td class="product-name">
+    <h3><%= item.product.name %></h3>
+    <p><%= truncate(item.product.description, length: 150) %></p>
+  </td>
+  <td class="price">
+    <%= number_to_currency(item.product.price, unit: 'đ', seperator: ',', format: "%n %u") %>
+  </td>
+  <td class="quantity">
+    <div class="input-group mb-3">
+      <input data-id="<%= item.id %>" type="text" name="quantity" class="quantity form-control input-number" value="<%= item.quantity %>" min="1" max="100">
+    </div>
+  </td>
+  <td class="total" id="total-<%= item.id %>">
+    <%= number_to_currency(item.quantity * item.product.price, unit: 'đ', seperator: ',', format: "%n %u") %>
+  </td>
+</tr>
