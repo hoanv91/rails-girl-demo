@@ -1,0 +1,72 @@
+<li class="nav-item">
+          <a class="nav-link" href="<%= root_path %>">Products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<%= cart_path(@current_cart) %>">Cart[<%= @current_cart.cart_items.count %>]</a>
+        </li>
+
+## cart show
+<section class="ftco-section ftco-cart">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 ftco-animate">
+        <div class="cart-list">
+
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">&nbsp;</th>
+                <th scope="col">&nbsp;</th>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @cart.cart_items.each do |item| %>
+                <%= render 'cart_item', item: item %>
+              <% end %>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+## cart item
+<tr class="text-center">
+  <td>
+    <a href="<%= cart_item_path(item) %>" data-method="delete" data-confirm="Are you sure?" class="close" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </a>
+  </td>
+  <td class="image-prod">
+    <img class="img-fluid img-thumbnail img" src="<%= item.product.image %>">
+  </td>
+  <td class="product-name">
+    <h3><%= item.product.name %></h3>
+    <p><%= truncate(item.product.description, length: 150) %></p>
+  </td>
+  <td class="price">
+    <%= number_to_currency(item.product.price, unit: 'đ', seperator: ',', format: "%n %u") %>
+  </td>
+  <td class="quantity">
+    <div class="input-group mb-3">
+      <input data-id="<%= item.id %>" type="text" name="quantity" class="quantity form-control input-number" value="<%= item.quantity %>" min="1" max="100">
+    </div>
+  </td>
+  <td class="total" id="total-<%= item.id %>">
+    <%= number_to_currency(item.quantity * item.product.price, unit: 'đ', seperator: ',', format: "%n %u") %>
+  </td>
+</tr>
+
+
+## products show/ _product
+<%= form_for(CartItem.new) do |f|%>
+      <input type="hidden" name="product_id" value="<%= @product.id %>">
+      <input type="hidden" name="quantity" value="1">
+      <%= submit_tag 'Add to cart' %>
+    <% end %>

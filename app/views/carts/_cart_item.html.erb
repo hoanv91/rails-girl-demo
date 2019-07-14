@@ -1,25 +1,22 @@
-<tr class="text-center">
-  <td>
-    <a href="<%= cart_item_path(item) %>" data-method="delete" data-confirm="Are you sure?" class="close" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </a>
-  </td>
-  <td class="image-prod">
-    <img class="img-fluid img-thumbnail img" src="<%= item.product.image %>">
-  </td>
-  <td class="product-name">
-    <h3><%= item.product.name %></h3>
-    <p><%= truncate(item.product.description, length: 150) %></p>
-  </td>
-  <td class="price">
-    <%= number_to_currency(item.product.price, unit: 'đ', seperator: ',', format: "%n %u") %>
-  </td>
-  <td class="quantity">
-    <div class="input-group mb-3">
-      <input data-id="<%= item.id %>" type="text" name="quantity" class="quantity form-control input-number" value="<%= item.quantity %>" min="1" max="100">
+<tr>
+  <td class="align-middle"><img class="img-thumbnail admin-product-image" src="<%= cart_item.product.image %>"/></td>
+  <td class="align-middle">
+    <div>
+      <%= cart_item.product.brand %>
+    </div>
+    <div>
+      <%= link_to cart_item.product.name, product_path(cart_item.product)%>
+    </div>
+    <div>
+      <%= vietnamese_currency(cart_item.product.price) %>
     </div>
   </td>
-  <td class="total" id="total-<%= item.id %>">
-    <%= number_to_currency(item.quantity * item.product.price, unit: 'đ', seperator: ',', format: "%n %u") %>
+  <td class="align-middle">
+    <%= link_to "-", remove_item_carts_path(cart_item.product), method: :delete, class: 'btn btn-danger mr-3' %>
+    <%= cart_item.quantity %>
+    <%= link_to "+", add_item_carts_path(cart_item.product), method: :post, class: 'btn btn-success ml-3' %>
+  </td>
+  <td class="align-middle">
+    <%= vietnamese_currency(cart_item.sub_total_price) %>
   </td>
 </tr>

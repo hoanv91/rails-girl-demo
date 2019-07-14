@@ -9,10 +9,6 @@
     <h4 class="product-name"><a href="<%= product_path(@product) %>"><%= @product.name %></a></h5>
     <h5 class="product-price"><%= number_to_currency(@product.price, unit: 'đ', seperator: ',', format: "%n %u") %></h5>
     <p class="product-description"><%= simple_format(@product.description) %></p>
-    <%= form_for(CartItem.new) do |f|%>
-      <input type="hidden" name="product_id" value="<%= @product.id %>">
-      <input type="hidden" name="quantity" value="1">
-      <%= submit_tag 'Add to cart' %>
-    <% end %>
+    <%= link_to "Add to cart", add_item_carts_path(@product), method: :post, class: 'btn btn-success mt-1' %>
   </div>
 </div>
